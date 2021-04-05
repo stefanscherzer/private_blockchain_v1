@@ -1,0 +1,209 @@
+{
+	"info": {
+		"_postman_id": "02aad5d6-7d00-446c-9418-9b6ee997a018",
+		"name": "private Blockchain v1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Default GET route",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1731599e-4722-4cd7-8418-0dc283d68295",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Welcome to my private Blockchain project!\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000",
+					"host": [
+						"localhost"
+					],
+					"port": "8000"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get the Genesis Block",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "60aaa418-6389-495e-bf5b-4fa405dbfc7f",
+						"exec": [
+							"pm.test(\"Check for block height 0\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.height).to.eql(0);",
+							"});",
+							"",
+							"pm.test(\"Genesis Block body\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.body).to.eql('7b2264617461223a2247656e6573697320426c6f636b227d');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/block/height/0",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"block",
+						"height",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "requestValidation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "71467486-48fa-4e05-9b0d-208b06c0d21a",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"address\":\"your-address\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/requestValidation",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"requestValidation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "submitstar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"address\":\"your-address\",\n    \"signature\":\"signature\",\n    \"message\":\"requestValidation-response\",\n    \"star\": {\n                \"dec\": \"68° 52' 56.9\",\n                \"ra\": \"16h 29m 1.0s\",\n                \"story\": \"Testing the story 4\"\n            }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/submitstar",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"submitstar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve Stars owned by me",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/blocks/your-address",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"blocks",
+						"your-address"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get Block by Hash",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/block/hash/your-hash",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"block",
+						"hash",
+						"your-hash"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "validationInfo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/validationInfo",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"validationInfo"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
